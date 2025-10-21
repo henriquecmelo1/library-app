@@ -1,10 +1,12 @@
 class AuthenticationController < ApplicationController
-  def login #Login (post /login)
+  skip_before_action :authorize_request, only: [ :login ]
+
+  def login # Login (post /login)
     @user = User.find_by(email: params[:email])
 
     if @user&.authenticate(params[:password])
-    
-      secret_key = ENV['JWT_SECRET_KEY']
+
+      secret_key = ENV["JWT_SECRET_KEY"]
 
       payload = {
         user_id: @user.id,

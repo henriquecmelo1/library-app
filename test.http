@@ -17,3 +17,8 @@ Content-Type: application/json
   "email": "meu-email@teste.com",
   "password": "senha123"
 }
+
+###
+
+GET http://localhost:3000/test_login
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDUyMzExfQ.L1k3hkp0azFzOBZJqtZa8f9r2auTCQLYiD5XgnBIirQ
