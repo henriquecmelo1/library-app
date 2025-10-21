@@ -1,0 +1,77 @@
+POST http://localhost:3000/materials
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+Content-Type: application/json
+
+{
+  "material": {
+    "type": "Book",
+    "author_id": 1,
+    "author_type": "Person",
+    "status": "archived",
+    "title": "1984",
+    "description": "A dystopian novel by George Orwell.",
+    "page_count": 328,
+    "isbn": "0123456789002"
+  }
+}
+
+###
+
+POST http://localhost:3000/materials
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+Content-Type: application/json
+
+{
+  "material": {
+    "type": "Article",
+    "author_id": 2,
+    "author_type": "Institution",
+    "status": "published",
+    "title": "Advances in AI Research",
+    "description": "An article discussing recent advancements in artificial intelligence.",
+    "doi": "10.1000/182"
+  }
+}
+
+###
+
+POST http://localhost:3000/materials
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+Content-Type: application/json
+
+{
+  "material": {
+    "type": "Video",
+    "author_id": 2,
+    "author_type": "Institution",
+    "status": "published",
+    "title": "Advances in AI Research",
+    "description": "An article discussing recent advancements in artificial intelligence.",
+    "duration_in_minutes": 45
+  }
+}
+
+###
+
+GET http://localhost:3000/materials
+
+###
+
+GET http://localhost:3000/materials/search?query=19
+
+###
+
+PATCH http://localhost:3000/materials/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+Content-Type: application/json
+
+{
+  "material": {
+    "description": "Video about AI"
+  }
+}
+
+###
+
+DELETE http://localhost:3000/materials/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc2Mjk1fQ.D3dz73u_TJwGDJl9Su5Gr-MkMEtYnCGKi0h_0Rli9mc

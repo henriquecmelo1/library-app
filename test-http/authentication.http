@@ -1,0 +1,24 @@
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+  "email": "meu-email2@teste.com",
+  "password": "senha123",
+  "password_confirmation": "senha123"
+}
+
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "email": "meu-email@teste.com",
+  "password": "senha123"
+}
+
+###
+
+GET http://localhost:3000/test_login
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+
