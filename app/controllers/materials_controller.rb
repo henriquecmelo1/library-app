@@ -12,7 +12,7 @@ class MaterialsController < ApplicationController
   # GET /materials
   def index
     
-    @pagy, @records = pagy(Material.order(:id), items: 1)
+    @pagy, @records = pagy(Material.order(:id))
     
     render json: {
       materials: @records,

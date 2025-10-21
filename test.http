@@ -21,17 +21,13 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/test_login
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDUyNjg4fQ.JQbviTtfn5JfqjZLCgD5rlnvPc7jQBGdUscJV75a_xg
-
-###
-
-GET https://openlibrary.org/isbn/0451526538.json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
 
 
 ###
 
 POST http://localhost:3000/materials
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMywiZXhwIjoxNzYxMDczNjgzfQ.-uavADqnZZqDqlKLg5-5giW_6WiAc3VN-JqNjuuzGOU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
 Content-Type: application/json
 
 {
@@ -43,13 +39,13 @@ Content-Type: application/json
     "title": "1984",
     "description": "A dystopian novel by George Orwell.",
     "page_count": 328,
-    "isbn": "0123456789012"
+    "isbn": "0123456789002"
   }
 }
 
 ###
 
-GET http://localhost:3000/materials/1
+GET http://localhost:3000/materials?page=4
 
 ###
 
@@ -71,3 +67,37 @@ Content-Type: application/json
 
 DELETE http://localhost:3000/materials/4
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc2Mjk1fQ.D3dz73u_TJwGDJl9Su5Gr-MkMEtYnCGKi0h_0Rli9mc
+
+###
+
+POST http://localhost:3000/people
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+Content-Type: application/json
+
+{
+  "person": {
+    "name": "Agatha Christie",
+    "date_of_birth": "1890-09-15"
+  }
+}
+
+###
+
+GET http://localhost:3000/people/1
+
+###
+
+POST http://localhost:3000/institutions
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+Content-Type: application/json
+
+{
+  "institution": {
+    "name": "City Library",
+    "city": "Metropolis"
+  }
+}
+
+###
+
+GET http://localhost:3000/institutions/1
