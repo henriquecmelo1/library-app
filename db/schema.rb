@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_10_20_221944) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "institutions", force: :cascade do |t|
     t.string "name"
     t.string "city"
@@ -22,9 +25,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_221944) do
     t.string "title"
     t.text "description"
     t.string "status"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "author_type", null: false
-    t.integer "author_id", null: false
+    t.bigint "author_id", null: false
     t.string "type"
     t.string "isbn"
     t.integer "page_count"
