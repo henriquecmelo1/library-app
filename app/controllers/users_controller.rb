@@ -3,8 +3,6 @@ class UsersController < ApplicationController
   skip_before_action :authorize_request, only: [:create]
 
   def create # Signup (post /signup)
-    Rails.logger.info "Received request with params: #{params.inspect}" # Log the request parameters
-
     @user = User.new(user_params)
 
     if @user.save

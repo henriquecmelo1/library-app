@@ -10,7 +10,7 @@ class AuthenticationController < ApplicationController
 
       payload = {
         user_id: @user.id,
-        exp: 1.minute.from_now.to_i
+        exp: 1.hour.from_now.to_i
       }
 
       token = JWT.encode(payload, secret_key)

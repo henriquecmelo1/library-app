@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "materials/index"
+  get "materials/show"
+  get "materials/create"
+  get "materials/update"
+  get "materials/destroy"
+  get "materials/search"
   
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -9,6 +15,12 @@ Rails.application.routes.draw do
   post '/login', to: 'authentication#login'
 
   get '/test_login', to: 'users#show'
+
+  resources :materials, except: [:new, :edit] do
+    collection do
+      get 'search'
+    end
+  end
 
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)

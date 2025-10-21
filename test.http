@@ -3,7 +3,7 @@ POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-  "email": "meu-email@teste.com",
+  "email": "meu-email2@teste.com",
   "password": "senha123",
   "password_confirmation": "senha123"
 }
@@ -21,4 +21,53 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/test_login
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDUyMzExfQ.L1k3hkp0azFzOBZJqtZa8f9r2auTCQLYiD5XgnBIirQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDUyNjg4fQ.JQbviTtfn5JfqjZLCgD5rlnvPc7jQBGdUscJV75a_xg
+
+###
+
+GET https://openlibrary.org/isbn/0451526538.json
+
+
+###
+
+POST http://localhost:3000/materials
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMywiZXhwIjoxNzYxMDczNjgzfQ.-uavADqnZZqDqlKLg5-5giW_6WiAc3VN-JqNjuuzGOU
+Content-Type: application/json
+
+{
+  "material": {
+    "type": "Book",
+    "author_id": 1,
+    "author_type": "Person",
+    "status": "archived",
+    "title": "1984",
+    "description": "A dystopian novel by George Orwell.",
+    "page_count": 328,
+    "isbn": "0123456789012"
+  }
+}
+
+###
+
+GET http://localhost:3000/materials/1
+
+###
+
+GET http://localhost:3000/materials/search?query=19
+
+###
+
+PATCH http://localhost:3000/materials/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc2Mjk1fQ.D3dz73u_TJwGDJl9Su5Gr-MkMEtYnCGKi0h_0Rli9mc
+Content-Type: application/json
+
+{
+  "material": {
+    "status": "published"
+  }
+}
+
+###
+
+DELETE http://localhost:3000/materials/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc2Mjk1fQ.D3dz73u_TJwGDJl9Su5Gr-MkMEtYnCGKi0h_0Rli9mc
