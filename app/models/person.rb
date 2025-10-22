@@ -13,7 +13,7 @@ class Person < ApplicationRecord
 
   def date_of_birth_cannot_be_in_the_future
     if date_of_birth.present? && date_of_birth > Date.today
-      errors.add(:date_of_birth, "não pode ser futura")
+      errors.add(:date_of_birth, "can not be in the future")
     end
   end
 end

@@ -5,5 +5,5 @@ class Article < Material
   validates :doi, 
     presence: true,
     uniqueness: true,
-    format: { with: DOI_REGEX, message: "deve seguir o formato padrão de DOI (ex.: 10.1000/xyz123)" }
+    format: { with: DOI_REGEX, message: "must follow DOI's format (ex.: 10.1000/xyz123)" }
 end

@@ -11,9 +11,9 @@ class MaterialsController < ApplicationController
 
   # GET /materials
   def index
-    
-    @pagy, @records = pagy(Material.order(:id))
-    
+
+    @pagy, @records = pagy(Material.where(status: 'published').order(:id))
+
     render json: {
       materials: @records,
       pagination: pagy_metadata(@pagy)
@@ -24,11 +24,11 @@ class MaterialsController < ApplicationController
   def search
     query = params[:query]
     if query.blank?
-      return render json: { error: 'O parâmetro "query" é obrigatório' }, status: :bad_request
+      return render json: { error: 'Query parameter is required' }, status: :bad_request
     end
 
     # Busca em materiais, e nos nomes de autores (Pessoa ou Instituição)
-    @materials = Material.all
+    @materials = Material.where( status: 'published' )
                          .joins("LEFT JOIN people ON materials.author_id = people.id AND materials.author_type = 'Person'")
                          .joins("LEFT JOIN institutions ON materials.author_id = institutions.id AND materials.author_type = 'Institution'")
                          .where("materials.title ILIKE :q OR materials.description ILIKE :q OR people.name ILIKE :q OR institutions.name ILIKE :q", q: "%#{query}%")
@@ -51,17 +51,16 @@ class MaterialsController < ApplicationController
   # POST /materials
   # Cria um material (Book, Article, Video)
   def create
-    Rails.logger.info "Creating material with params: #{params.inspect}" # Log the request parameters
-    # 1. Filtra os parâmetros
+  
     local_params = material_params
 
-    # 2. Chama a API Externa se for um Livro (Req 2.5)
+    # Chama a API OpenLibrary se for um livro
     if local_params[:type] == 'Book' && local_params[:isbn].present?
-      # Só chama a API se o título ou as páginas estiverem faltando
+      # Checa se falta alguma coisa
       if local_params[:title].blank? || local_params[:page_count].blank?
         book_data = OpenLibraryService.fetch_book_data(local_params[:isbn])
         
-        # Se a API retornou dados, preenche o que faltava
+        # Preenche caso a API tenha retornado dados
         if book_data
           local_params[:title] = book_data[:title] if local_params[:title].blank?
           local_params[:page_count] = book_data[:page_count] if local_params[:page_count].blank?
@@ -69,11 +68,10 @@ class MaterialsController < ApplicationController
       end
     end
 
-    # 3. Constroí o material associado ao usuário logado (Req 3.2)
-    # @current_user vem do ApplicationController
+    # Associa ao usuário logado
     @material = @current_user.materials.build(local_params)
 
-    # 4. Salva (O Rails usará as validações corretas do modelo filho)
+    # Salva
     if @material.save
       render json: @material, status: :created
     else
@@ -117,13 +115,13 @@ class MaterialsController < ApplicationController
   def set_material
     @material = Material.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Material não encontrado' }, status: :not_found
+    render json: { error: 'Material not found' }, status: :not_found
   end
 
   # Verifica se o usuário logado é o criador do material (Req 2.3)
   def check_owner
     unless @material.user_id == @current_user.id
-      render json: { error: 'Não autorizado' }, status: :unauthorized
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 end

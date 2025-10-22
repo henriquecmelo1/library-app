@@ -56,7 +56,7 @@ class PeopleController < ApplicationController
   def set_person
     @person = Person.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Autor (Pessoa) não encontrado' }, status: :not_found
+    render json: { error: 'Author (person) not found' }, status: :not_found
   end
 
   def person_params
