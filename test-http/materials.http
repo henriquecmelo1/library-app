@@ -57,7 +57,7 @@ GET http://localhost:3000/materials
 
 ###
 
-GET http://localhost:3000/materials/search?author=Or
+GET http://localhost:3000/materials/search
 
 ###
 

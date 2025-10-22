@@ -124,7 +124,7 @@ class MaterialsController < ApplicationController
         render json: { errors: @material.errors.full_messages }, status: :unprocessable_content
       end
     when "archived"
-      render json: { error: "Não é possível avançar o status 'arquivado'" }, status: :bad_request
+      render json: { error: "It's not possible to advance the status 'archived'" }, status: :bad_request
     end
   end
 
@@ -144,7 +144,7 @@ class MaterialsController < ApplicationController
         render json: { errors: @material.errors.full_messages }, status: :unprocessable_entity
       end
     when "draft"
-      render json: { error: "Não é possível reverter o status 'rascunho'" }, status: :bad_request
+      render json: { error: "It's not possible to revert the status 'draft'" }, status: :bad_request
     end
   end
   

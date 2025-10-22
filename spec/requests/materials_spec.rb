@@ -12,6 +12,7 @@ RSpec.describe "Materials API", type: :request do
   let!(:material_publicado) do
     user_dono.materials.create!(
       title: "Livro Publicado do Dono",
+      description: "Uma descrição única para a busca.", 
       status: "published", 
       author: author,
       type: "Book",
@@ -135,18 +136,43 @@ RSpec.describe "Materials API", type: :request do
 
   # Busca e Paginação (GET /materials/search) 
   describe "GET /materials/search" do
-    # Teste 8: Busca de Materiais com resultado (GET /materials/search)
-    it "retorna 200 OK e os resultados da busca" do
-      get "/materials/search?query=Dono" # Busca deve achar o 'material_publicado'
+    # Teste 8: Busca sem parâmetros (GET /materials/search)
+    it "retorna 400 Bad Request se nenhum parâmetro de busca for fornecido" do
+      get "/materials/search"
+      expect(response).to have_http_status(:bad_request)
+      expect(json_response['error']).to eq("Search parameter must be one of these: title, author, description")
+    end
+
+    # Teste 9: Busca com parâmetros (GET /materials/search?title) 
+    it "retorna 200 OK e resultados ao buscar por 'title'" do
+      get "/materials/search?title=Publicado"
       
       expect(response).to have_http_status(:ok)
       expect(json_response['materials'].count).to eq(1)
       expect(json_response['materials'][0]['title']).to eq("Livro Publicado do Dono")
     end
 
-    # Teste 9: Busca de Materiais sem resultado (GET /materials/search)
+    # Teste 10: Busca com parâmetros (GET /materials/search?author)
+    it "retorna 200 OK e resultados ao buscar por 'author'" do
+      # O nome do nosso autor é "Autor Testável"
+      get "/materials/search?author=Test"
+      
+      expect(response).to have_http_status(:ok)
+      expect(json_response['materials'].count).to eq(1)
+    end
+    
+    # Teste 11: Busca com parâmetros (GET /materials/search?description)
+    it "retorna 200 OK e resultados ao buscar por 'description'" do
+      # A descrição é "Uma descrição única para a busca."
+      get "/materials/search?description=busca"
+      
+      expect(response).to have_http_status(:ok)
+      expect(json_response['materials'].count).to eq(1)
+    end
+    
+    # Teste 12: Busca sem resultados (GET /materials/search)
     it "retorna 200 OK e um array vazio se a busca não encontrar nada" do
-      get "/materials/search?query=Inexistente"
+      get "/materials/search?title=Inexistente"
       
       expect(response).to have_http_status(:ok)
       expect(json_response['materials'].count).to eq(0)
@@ -162,7 +188,7 @@ RSpec.describe "Materials API", type: :request do
       }.to_json
     end
 
-    # Teste 10: Criação de Livro com dados da OpenLibrary (POST /materials)
+    # Teste 13: Criação de Livro com dados da OpenLibrary (POST /materials)
     it "chama a OpenLibrary e preenche o título/páginas se eles estiverem faltando" do
       
       # Prepara a resposta JSON que a API externa VAI retornar
@@ -184,7 +210,7 @@ RSpec.describe "Materials API", type: :request do
       expect(json_response['page_count']).to eq(216)
     end
 
-    # Teste 11: Criação de Livro com ISBN válido, mas dados inseridos pelo usuário (POST /materials)
+    # Teste 14: Criação de Livro com ISBN válido, mas dados inseridos pelo usuário (POST /materials)
     it "não sobrescreve título/páginas se eles forem fornecidos pelo usuário" do
       # Mocka a chamada para garantir que a API externa não sobrescreva
       stub_request(:get, "https://openlibrary.org/isbn/#{isbn}.json")
@@ -205,6 +231,83 @@ RSpec.describe "Materials API", type: :request do
       expect(json_response['title']).to eq("Título do Usuário")
       expect(json_response['page_count']).to eq(150)
 
+    end
+  end
+
+  # Testes de Mudança de Status (PATCH /materials/:id/push_status e /pull_status)
+  # Push Status
+  describe "PATCH /materials/:id/push_status" do
+    # Teste 15: Tentativa de push_status sem token
+    it "retorna 401 Unauthorized se não houver token" do
+      patch "/materials/#{material_rascunho.id}/push_status", headers: headers_sem_token
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    # Teste 16: Tentativa de push_status por não-dono
+    it "retorna 401 Unauthorized se o token for de outro usuário (não-dono)" do
+      patch "/materials/#{material_rascunho.id}/push_status", headers: headers_outro
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    # Teste 17: Draft -> Published
+    it "muda o status de 'draft' para 'published'" do
+      patch "/materials/#{material_rascunho.id}/push_status", headers: headers_dono
+      expect(response).to have_http_status(:ok)
+      expect(json_response['status']).to eq("published")
+    end
+    
+    # Teste 18: Published -> Archived
+    it "muda o status de 'published' para 'archived'" do
+      # 'material_publicado' já está published
+      patch "/materials/#{material_publicado.id}/push_status", headers: headers_dono
+      expect(response).to have_http_status(:ok)
+      expect(json_response['status']).to eq("archived")
+    end
+    
+    # Teste 19: Tentativa de push_status de 'archived' (estado final)
+    it "retorna 400 Bad Request ao tentar 'push' de 'archived'" do
+      material_publicado.update!(status: :archived) # Força o estado
+      patch "/materials/#{material_publicado.id}/push_status", headers: headers_dono
+      expect(response).to have_http_status(:bad_request)
+      expect(json_response['error']).to include("It's not possible to advance the status 'archived'")
+    end
+  end
+
+  # Pull Status
+  describe "PATCH /materials/:id/pull_status" do
+    # Teste 20: Tentativa de pull_status sem token
+    it "retorna 401 Unauthorized se não houver token" do
+      patch "/materials/#{material_publicado.id}/pull_status", headers: headers_sem_token
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    # Teste 21: Tentativa de pull_status por não-dono
+    it "retorna 401 Unauthorized se o token for de outro usuário (não-dono)" do
+      patch "/materials/#{material_publicado.id}/pull_status", headers: headers_outro
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    # Teste 22: Published -> Draft
+    it "muda o status de 'published' para 'draft'" do
+       patch "/materials/#{material_publicado.id}/pull_status", headers: headers_dono
+       expect(response).to have_http_status(:ok)
+       expect(json_response['status']).to eq("draft")
+    end
+
+    # Teste 23: Archived -> Published
+    it "muda o status de 'archived' para 'published'" do
+      material_publicado.update!(status: :archived) # Força o estado
+      patch "/materials/#{material_publicado.id}/pull_status", headers: headers_dono
+      expect(response).to have_http_status(:ok)
+      expect(json_response['status']).to eq("published")
+    end
+    
+    # Teste 24: Tentativa de pull_status de 'draft' (estado inicial)
+    it "retorna 400 Bad Request ao tentar 'pull' de 'draft'" do
+      # 'material_rascunho' já está draft
+      patch "/materials/#{material_rascunho.id}/pull_status", headers: headers_dono
+      expect(response).to have_http_status(:bad_request)
+      expect(json_response['error']).to include("It's not possible to revert the status 'draft'")
     end
   end
 end
