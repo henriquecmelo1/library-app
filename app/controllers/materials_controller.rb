@@ -12,7 +12,7 @@ class MaterialsController < ApplicationController
   # GET /materials
   def index
     
-    @pagy, @records = pagy(Material.order(:id))
+    @pagy, @records = pagy(Material.order(:id).where(status: 'published'))
     
     render json: {
       materials: @records,
@@ -28,7 +28,7 @@ class MaterialsController < ApplicationController
     end
 
     # Busca em materiais, e nos nomes de autores (Pessoa ou Instituição)
-    @materials = Material.all
+    @materials = Material.where(status: 'published')
                          .joins("LEFT JOIN people ON materials.author_id = people.id AND materials.author_type = 'Person'")
                          .joins("LEFT JOIN institutions ON materials.author_id = institutions.id AND materials.author_type = 'Institution'")
                          .where("materials.title ILIKE :q OR materials.description ILIKE :q OR people.name ILIKE :q OR institutions.name ILIKE :q", q: "%#{query}%")
