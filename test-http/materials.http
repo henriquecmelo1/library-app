@@ -57,17 +57,17 @@ GET http://localhost:3000/materials
 
 ###
 
-GET http://localhost:3000/materials/search?query=about
+GET http://localhost:3000/materials/search?author=Or
 
 ###
 
-PATCH http://localhost:3000/materials/7
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+PATCH http://localhost:3000/materials/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMTYxMjk1fQ.TPGIczBFWvRhy3ziGrVqfDKxI2GbabIGXtxRk_NHqXE
 Content-Type: application/json
 
 {
   "material": {
-    "description": "Video about AI"
+    "status": "draft"
   }
 }
 
@@ -75,3 +75,14 @@ Content-Type: application/json
 
 DELETE http://localhost:3000/materials/
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc2Mjk1fQ.D3dz73u_TJwGDJl9Su5Gr-MkMEtYnCGKi0h_0Rli9mc
+
+
+###
+
+PATCH http://localhost:3000/materials/1/push_status
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMTYxMjk1fQ.TPGIczBFWvRhy3ziGrVqfDKxI2GbabIGXtxRk_NHqXE
+
+###
+
+PATCH http://localhost:3000/materials/1/pull_status
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMTYxMjk1fQ.TPGIczBFWvRhy3ziGrVqfDKxI2GbabIGXtxRk_NHqXE

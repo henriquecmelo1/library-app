@@ -14,6 +14,12 @@ Rails.application.routes.draw do
     collection do
       get 'search'
     end
+
+    member do
+      patch 'push_status' # Para avançar (draft -> pub -> arch)
+      patch 'pull_status' # Para reverter (arch -> pub -> draft)
+    end
+
   end
 
   resources :people, except: [:new, :edit]
