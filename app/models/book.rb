@@ -2,8 +2,8 @@ class Book < Material
   validates :isbn, 
     presence: true, 
     uniqueness: true,
-    length: { is: 13, message: "deve ter 13 caracteres" }, 
-    numericality: { only_integer: true, message: "deve conter apenas números" }
+    numericality: { only_integer: true, message: "must contain only numbers" },
+    length: { is: 13, message: "must contain exactly 13 digits" }
 
   validates :page_count, 
     presence: true, 

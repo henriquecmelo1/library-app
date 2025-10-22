@@ -4,16 +4,16 @@ class MaterialsController < ApplicationController
   skip_before_action :authorize_request, only: [:index, :show, :search]
 
   # Encontra o material para :show, :update, :destroy
-  before_action :set_material, only: [:show, :update, :destroy]
+  before_action :set_material, only: [:show, :update, :destroy, :push_status, :pull_status]
 
   # Verifica se o usuário é o dono para :update, :destroy
-  before_action :check_owner, only: [:update, :destroy]
+  before_action :check_owner, only: [:update, :destroy, :push_status, :pull_status]
 
   # GET /materials
   def index
-    
-    @pagy, @records = pagy(Material.order(:id).where(status: 'published'))
-    
+
+    @pagy, @records = pagy(Material.where(status: 'published').order(:id))
+
     render json: {
       materials: @records,
       pagination: pagy_metadata(@pagy)
@@ -22,19 +22,27 @@ class MaterialsController < ApplicationController
 
   # GET /materials/search
   def search
-    query = params[:query]
-    if query.blank?
-      return render json: { error: 'O parâmetro "query" é obrigatório' }, status: :bad_request
+    # Começamos com a base da query: materiais publicados
+    @materials = Material.where(status: 'published')
+
+    # Verificamos os parâmetros um por um
+    if params[:title].present?
+      @materials = @materials.where("materials.title ILIKE ?", "%#{params[:title]}%")
+    
+    elsif params[:author].present?
+      @materials = @materials.joins("LEFT JOIN people ON materials.author_id = people.id AND materials.author_type = 'Person'")
+                             .joins("LEFT JOIN institutions ON materials.author_id = institutions.id AND materials.author_type = 'Institution'")
+                             .where("people.name ILIKE :q OR institutions.name ILIKE :q", q: "%#{params[:author]}%")
+    
+    elsif params[:description].present?
+      @materials = @materials.where("materials.description ILIKE ?", "%#{params[:description]}%")
+    
+    else
+      return render json: { error: 'Search parameter must be one of these: title, author, description' }, status: :bad_request
     end
 
-    # Busca em materiais, e nos nomes de autores (Pessoa ou Instituição)
-    @materials = Material.where(status: 'published')
-                         .joins("LEFT JOIN people ON materials.author_id = people.id AND materials.author_type = 'Person'")
-                         .joins("LEFT JOIN institutions ON materials.author_id = institutions.id AND materials.author_type = 'Institution'")
-                         .where("materials.title ILIKE :q OR materials.description ILIKE :q OR people.name ILIKE :q OR institutions.name ILIKE :q", q: "%#{query}%")
-                         .distinct
-
-    @pagy, @records = pagy(@materials)
+    # Aplicamos o distinct (para o caso do join de autor) e a paginação
+    @pagy, @records = pagy(@materials.distinct)
     
     render json: {
       materials: @records,
@@ -51,17 +59,16 @@ class MaterialsController < ApplicationController
   # POST /materials
   # Cria um material (Book, Article, Video)
   def create
-    Rails.logger.info "Creating material with params: #{params.inspect}" # Log the request parameters
-    # 1. Filtra os parâmetros
+  
     local_params = material_params
 
-    # 2. Chama a API Externa se for um Livro (Req 2.5)
+    # Chama a API OpenLibrary se for um livro
     if local_params[:type] == 'Book' && local_params[:isbn].present?
-      # Só chama a API se o título ou as páginas estiverem faltando
+      # Checa se falta alguma coisa
       if local_params[:title].blank? || local_params[:page_count].blank?
         book_data = OpenLibraryService.fetch_book_data(local_params[:isbn])
         
-        # Se a API retornou dados, preenche o que faltava
+        # Preenche caso a API tenha retornado dados
         if book_data
           local_params[:title] = book_data[:title] if local_params[:title].blank?
           local_params[:page_count] = book_data[:page_count] if local_params[:page_count].blank?
@@ -69,15 +76,14 @@ class MaterialsController < ApplicationController
       end
     end
 
-    # 3. Constroí o material associado ao usuário logado (Req 3.2)
-    # @current_user vem do ApplicationController
+    # Associa ao usuário logado
     @material = @current_user.materials.build(local_params)
 
-    # 4. Salva (O Rails usará as validações corretas do modelo filho)
+    # Salva
     if @material.save
       render json: @material, status: :created
     else
-      render json: { errors: @material.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @material.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -88,7 +94,7 @@ class MaterialsController < ApplicationController
     if @material.update(material_params)
       render json: @material
     else
-      render json: { errors: @material.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @material.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -99,6 +105,49 @@ class MaterialsController < ApplicationController
     @material.destroy
     head :no_content # Retorna status 204 (No Content)
   end
+
+  # PATCH /materials/:id/push_status
+
+  def push_status
+    # Usamos um 'case' para controlar a transição
+    case @material.status
+    when "draft"
+      if @material.update(status: :published)
+        render json: @material, status: :ok
+      else
+        render json: { errors: @material.errors.full_messages }, status: :unprocessable_content
+      end
+    when "published"
+      if @material.update(status: :archived)
+        render json: @material, status: :ok
+      else
+        render json: { errors: @material.errors.full_messages }, status: :unprocessable_content
+      end
+    when "archived"
+      render json: { error: "It's not possible to advance the status 'archived'" }, status: :bad_request
+    end
+  end
+
+  # PATCH /materials/:id/pull_status
+  def pull_status
+    case @material.status
+    when "archived"
+      if @material.update(status: :published)
+        render json: @material, status: :ok
+      else
+        render json: { errors: @material.errors.full_messages }, status: :unprocessable_entity
+      end
+    when "published"
+      if @material.update(status: :draft)
+        render json: @material, status: :ok
+      else
+        render json: { errors: @material.errors.full_messages }, status: :unprocessable_entity
+      end
+    when "draft"
+      render json: { error: "It's not possible to revert the status 'draft'" }, status: :bad_request
+    end
+  end
+  
 
   private
 
@@ -117,13 +166,13 @@ class MaterialsController < ApplicationController
   def set_material
     @material = Material.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Material não encontrado' }, status: :not_found
+    render json: { error: 'Material not found' }, status: :not_found
   end
 
   # Verifica se o usuário logado é o criador do material (Req 2.3)
   def check_owner
     unless @material.user_id == @current_user.id
-      render json: { error: 'Não autorizado' }, status: :unauthorized
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 end

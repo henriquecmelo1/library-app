@@ -28,7 +28,7 @@ class InstitutionsController < ApplicationController
     if @institution.save
       render json: @institution, status: :created
     else
-      render json: { errors: @institution.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @institution.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -38,7 +38,7 @@ class InstitutionsController < ApplicationController
     if @institution.update(institution_params)
       render json: @institution
     else
-      render json: { errors: @institution.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @institution.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -48,7 +48,7 @@ class InstitutionsController < ApplicationController
     if @institution.destroy
       head :no_content
     else
-      render json: { errors: @institution.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @institution.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -57,7 +57,7 @@ class InstitutionsController < ApplicationController
   def set_institution
     @institution = Institution.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Autor (Instituição) não encontrado' }, status: :not_found
+    render json: { error: 'Author (institution) not found' }, status: :not_found
   end
 
   def institution_params

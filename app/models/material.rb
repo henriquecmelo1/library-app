@@ -6,7 +6,7 @@ class Material < ApplicationRecord
     draft: 'rascunho',
     published: 'publicado',
     archived: 'arquivado'
-  }
+  }, validate: true 
 
   
   validates :title, presence: true, length: { in: 3..100 }
