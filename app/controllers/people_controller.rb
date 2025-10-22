@@ -25,7 +25,7 @@ class PeopleController < ApplicationController
     if @person.save
       render json: @person, status: :created
     else
-      render json: { errors: @person.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @person.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -35,7 +35,7 @@ class PeopleController < ApplicationController
     if @person.update(person_params)
       render json: @person
     else
-      render json: { errors: @person.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @person.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -47,7 +47,7 @@ class PeopleController < ApplicationController
     if @person.destroy
       head :no_content
     else
-      render json: { errors: @person.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @person.errors.full_messages }, status: :unprocessable_content
     end
   end
 

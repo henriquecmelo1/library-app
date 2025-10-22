@@ -75,7 +75,7 @@ class MaterialsController < ApplicationController
     if @material.save
       render json: @material, status: :created
     else
-      render json: { errors: @material.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @material.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -86,7 +86,7 @@ class MaterialsController < ApplicationController
     if @material.update(material_params)
       render json: @material
     else
-      render json: { errors: @material.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @material.errors.full_messages }, status: :unprocessable_content
     end
   end
 
