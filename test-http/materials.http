@@ -1,5 +1,5 @@
 POST http://localhost:3000/materials
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDk4Mzk0fQ.u7da66akd_fF1Sah8bexqMZTh5wdEU1o9GX6YAuN7eo
 Content-Type: application/json
 
 {
@@ -7,7 +7,7 @@ Content-Type: application/json
     "type": "Book",
     "author_id": 1,
     "author_type": "Person",
-    "status": "archived",
+    "status": "done",
     "title": "1984",
     "description": "A dystopian novel by George Orwell.",
     "page_count": 328,
@@ -18,7 +18,7 @@ Content-Type: application/json
 ###
 
 POST http://localhost:3000/materials
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDc3NDg1fQ.4VbuRE9-nHF6MGTatdottkrjezoyzYsJGFkkzA6-lHI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNzYxMDk4Mzk0fQ.u7da66akd_fF1Sah8bexqMZTh5wdEU1o9GX6YAuN7eo
 Content-Type: application/json
 
 {
@@ -27,9 +27,9 @@ Content-Type: application/json
     "author_id": 2,
     "author_type": "Institution",
     "status": "published",
-    "title": "Advances in AI Research",
-    "description": "An article discussing recent advancements in artificial intelligence.",
-    "doi": "10.1000/182"
+    "title": "How AI is Changing the World",
+    "description": "An article the impacts of artificial intelligence.",
+    "doi": "10.1000/183"
   }
 }
 
@@ -57,7 +57,7 @@ GET http://localhost:3000/materials
 
 ###
 
-GET http://localhost:3000/materials/search?query=19
+GET http://localhost:3000/materials/search?query=about
 
 ###
 
