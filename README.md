@@ -1,73 +1,83 @@
-# Library App API
+# 📖 Library App API
 
-Uma API RESTful completa construída em Ruby on Rails para gerenciar uma plataforma de biblioteca digital. O projeto inclui autenticação JWT, gerenciamento de materiais (com STI), autores polimórficos, integração com API externa (Open Library) e uma cobertura de testes de 90% com RSpec.
+Uma **API RESTful completa** construída em **Ruby on Rails** para gerenciar uma **plataforma de biblioteca digital**.
+Inclui **autenticação JWT**, **gerenciamento de materiais (com STI)**, **autores polimórficos**, **integração com API externa (Open Library)** e **cobertura de testes de 90% com RSpec**.
 
------
+---
 
-## Tabela de Conteúdos
+## 🧭 Tabela de Conteúdos
 
-1.  [Funcionalidades Principais](#funcionalidades-principais)
-2.  [Stack de Tecnologia](#stack-de-tecnologia)
-3.  [Instalação e Execução (Local)](#instalação-e-execução-local)
-4.  [Testes](#testes)
-5.  [Documentação da API (Endpoints)](#documentação-da-api-endpoints)
-      * [Autenticação](#autenticação)
-      * [Materiais (Livros, Artigos, Vídeos)](#materiais)
-      * [Autores (Pessoa)](#autores-pessoa)
-      * [Autores (Instituição)](#autores-instituição)
-6.  [Documentação Interativa (Postman)](#documentação-interativa-postman)
-7.  [Fluxos de Negócio Importantes](#fluxos-de-negócio-importantes)
-      * [Autorização (Dono vs. Público)](#autorização)
-      * [Criação de Livro via ISBN](#criação-de-livro-via-isbn)
-8.  [Testando Manualmente (API Client)](#testando-manualmente-api-client)
-9.  [Estrutura do Projeto](#estrutura-do-projeto)
-10.  [Próximos Passos](#próximos-passos)
+1. [✨ Funcionalidades Principais](#-funcionalidades-principais)
+2. [🧱 Stack de Tecnologia](#-stack-de-tecnologia)
+3. [⚙️ Instalação e Execução (Local)](#️-instalação-e-execução-local)
+4. [🧪 Testes](#-testes)
+5. [📡 Documentação da API (Endpoints)](#-documentação-da-api-endpoints)
 
------
+   * 🔐 [Autenticação](#-autenticação)
+   * 📘 [Materiais (Livros, Artigos, Vídeos)](#-materiais)
+   * 👤 [Autores (Pessoa)](#-autores-pessoa)
+   * 🏛️ [Autores (Instituição)](#-autores-instituição)
+6. [🧭 Documentação Interativa (Postman)](#-documentação-interativa-postman)
+7. [⚙️ Fluxos de Negócio Importantes](#️-fluxos-de-negócio-importantes)
 
-## Funcionalidades Principais
+   * 🛡️ [Autorização (Dono vs. Público)](#-autorização)
+   * 📖 [Criação de Livro via ISBN](#-criação-de-livro-via-isbn)
+8. [🗂️ Estrutura do Projeto](#️-estrutura-do-projeto)
+9. [🚀 Próximos Passos](#-próximos-passos)
+10. [🔮 GraphQL Implementation](#-graphql-implementation)
 
-  * **Autenticação JWT:** Sistema completo de registro (`/signup`) e login (`/login`) usando `bcrypt` e `jwt`.
-  * **Modelagem Avançada:**
-      * **STI (Single Table Inheritance):** Modelo `Material` como base para `Book`, `Article` e `Video`.
-      * **Polimorfismo:** Materiais podem ser de autoria de uma `Person` ou `Institution`.
-  * **Integração com API Externa:** Preenchimento automático de `title` e `page_count` para livros ao cadastrar com `isbn`, consumindo a API da Open Library.
-  * **Máquina de Estado de Status:** Endpoints dedicados (`/push_status` e `/pull_status`) para controlar o ciclo de vida dos materiais (Draft -\> Published -\> Archived).
-  * **Busca e Paginação:** Endpoint de busca (`/search`) com múltiplos parâmetros e paginação em todas as listagens usando a gem `pagy`.
-  * **Testes Robustos:** Cobertura de 90%+ com RSpec, incluindo testes de unidade (model) e requisição (request), com *mocking* da API externa usando `webmock`.
+    * 🔍 [Exemplo de Busca](#-exemplo-de-busca)
+    * 🧾 [Headers](#-headers)
+    * 🖥️ [Interface Gráfica](#-interface-gráfica)
 
-## Stack de Tecnologia
+---
 
-| Categoria | Tecnologia | Propósito |
-| :--- | :--- | :--- |
-| **Core** | Ruby 3.2.x, Rails 8.0.x | Backend da aplicação |
-| **Banco de Dados** | PostgreSQL | Banco de dados relacional |
-| **Servidor** | Puma | Servidor de aplicação web |
-| **Autenticação** | `bcrypt`, `jwt` | Hash de senha e geração de tokens |
-| **API** | `httparty`, `pagy`, `rack-cors` | Cliente HTTP, Paginação e CORS |
-| **Testes** | `rspec-rails`, `webmock`, `simplecov` | Testes, Mocking de API e Cobertura |
+## ✨ Funcionalidades Principais
 
-## Instalação e Execução (Local)
+* 🔐 **Autenticação JWT:** Sistema completo de registro (`/signup`) e login (`/login`) usando `bcrypt` e `jwt`.
+* 🧩 **Modelagem Avançada:**
 
-Siga os passos abaixo para configurar o ambiente de desenvolvimento.
+  * 🏷️ **STI (Single Table Inheritance):** Modelo `Material` como base para `Book`, `Article` e `Video`.
+  * 🔄 **Polimorfismo:** Materiais podem ser de autoria de uma `Person` ou `Institution`.
+* 🌍 **Integração com API Externa:** Preenchimento automático de `title` e `page_count` via **Open Library API**.
+* 🔁 **Máquina de Estado de Status:** Controle de ciclo de vida (`Draft → Published → Archived`).
+* 🔎 **Busca e Paginação:** Endpoint `/search` com múltiplos parâmetros e paginação (`pagy`).
+* 🧪 **Testes Robustos:** Cobertura acima de 90% com `RSpec` e `SimpleCov`.
 
-**Pré-requisitos:** Ruby 3.2+, PostgreSQL (rodando) e Node.js/Yarn.
+---
 
-1.  **Clone o repositório:**
+## 🧱 Stack de Tecnologia
 
-    ```bash
-    git clone https://github.com/henriquecmelo1/library-app.git
-    cd library-app
-    ```
+| Categoria          | Tecnologia                            | Propósito                      |
+| :----------------- | :------------------------------------ | :----------------------------- |
+| **Core**           | Ruby 3.2.x, Rails 8.0.x               | Backend da aplicação           |
+| **Banco de Dados** | PostgreSQL                            | Banco de dados relacional      |
+| **Servidor**       | Puma                                  | Servidor web                   |
+| **Autenticação**   | `bcrypt`, `jwt`                       | Hash de senha e tokens         |
+| **API**            | `httparty`, `pagy`, `rack-cors`       | Cliente HTTP, Paginação e CORS |
+| **Testes**         | `rspec-rails`, `simplecov`            | Testes e Cobertura    |
 
-2.  **Instale as dependências:**
+---
 
-    ```bash
-    bundle install
-    yarn install 
-    ```
+## ⚙️ Instalação e Execução (Local)
 
-3.  **Configure as Variáveis de Ambiente:**
+**Pré-requisitos:** Ruby 3.2+, PostgreSQL e Node.js/Yarn.
+
+1. **Clone o repositório:**
+
+   ```bash
+   git clone https://github.com/henriquecmelo1/library-app.git
+   cd library-app
+   ```
+
+2. **Instale as dependências:**
+
+   ```bash
+   bundle install
+   yarn install
+   ```
+
+3. **Configure as variáveis de ambiente (.env):**
     Crie seu arquivo `.env` para armazenar as chaves secretas.
 
     Gere uma chave secreta (comando `rails secret`) e adicione-a ao seu `.env`:
@@ -76,72 +86,67 @@ Siga os passos abaixo para configurar o ambiente de desenvolvimento.
     JWT_SECRET_KEY=sua_chave_secreta_gerada_aqui
     ```
 
-4.  **Configure o Banco de Dados:**
+4. **Configure o banco de dados:**
 
-    ```bash
-    rails db:create
-    rails db:migrate
-    ```
+   ```bash
+   rails db:create
+   rails db:migrate
+   ```
 
-5.  **Rode os Testes (Opcional, mas recomendado):**
+5. **Rode os testes (opcional, mas recomendado):**
 
-    ```bash
-    bundle exec rspec
-    ```
+   ```bash
+   bundle exec rspec
+   ```
 
-6.  **Inicie o Servidor:**
+6. **Inicie o servidor:**
 
-    ```bash
-    rails server
-    ```
+   ```bash
+   rails server
+   ```
 
-    A API estará rodando em `http://localhost:3000`.
+   🌐 A API estará rodando em `http://localhost:3000`.
 
------
+---
 
-## Testes
+## 🧪 Testes
 
-O projeto usa RSpec para testes de unidade e requisição. A cobertura de testes está acima de 90%.
+🧠 O projeto utiliza **RSpec** com cobertura superior a **90%**.
 
 ```bash
-# Rodar todos os testes
 bundle exec rspec
-
-# Gerar relatório de cobertura (após rodar os testes)
-# Abra o arquivo coverage/index.html
 ```
 
-As chamadas à API da Open Library são "mockadas" usando `webmock` (veja `spec/support/webmock.rb`).
+📊 Após rodar os testes, veja o relatório em `coverage/index.html`.
 
------
+---
 
-## Documentação da API (Endpoints)
+## 📡 Documentação da API (Endpoints)
 
-Todas as rotas de criação/atualização/remoção (POST, PATCH, DELETE) exigem um token JWT válido enviado no cabeçalho:
+**Autenticação JWT obrigatória** em todas as rotas protegidas:
 `Authorization: Bearer <seu_token>`
 
-### Autenticação
+### 🔐 Autenticação
 
-| Método | Endpoint | Controller\#Ação | Propósito |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/signup` | `UsersController#create` | Registra um novo usuário. |
-| `POST` | `/login` | `AuthenticationController#login` | Autentica e retorna um token JWT. |
+| Método | Endpoint  | Ação                             | Descrição             |
+| :----- | :-------- | :------------------------------- | :-------------------- |
+| `POST` | `/signup` | `UsersController#create`         | Registra novo usuário |
+| `POST` | `/login`  | `AuthenticationController#login` | Gera token JWT        |
 
-### Materiais
+### 📘 Materiais
 
-| Método | Endpoint | Controller\#Ação | Propósito |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/materials` | `MaterialsController#index` | (Público) Lista materiais **publicados** (paginado). |
-| `GET` | `/materials/:id` | `MaterialsController#show` | (Público) Mostra um material específico. |
-| `GET` | `/materials/search` | `MaterialsController#search` | (Público) Busca materiais por `title`, `author` ou `description`. |
-| `POST` | `/materials` | `MaterialsController#create` | (Autenticado) Cria um novo material (Book, Article, Video). |
-| `PATCH`| `/materials/:id` | `MaterialsController#update` | (Dono) Atualiza um material. |
-| `DELETE`| `/materials/:id`| `MaterialsController#destroy`| (Dono) Deleta um material. |
-| `PATCH`| `/materials/:id/push_status`| `MaterialsController#push_status`| (Dono) Avança o status (ex: Draft -\> Published). |
-| `PATCH`| `/materials/:id/pull_status`| `MaterialsController#pull_status`| (Dono) Reverte o status (ex: Archived -\> Published). |
+| Método   | Endpoint                     | Ação          | Descrição                            |
+| :------- | :--------------------------- | :------------ | :----------------------------------- |
+| `GET`    | `/materials`                 | `index`       | Lista materiais publicados           |
+| `GET`    | `/materials/:id`             | `show`        | Mostra um material                   |
+| `GET`    | `/materials/search`          | `search`      | Busca por título, autor ou descrição |
+| `POST`   | `/materials`                 | `create`      | Cria material                        |
+| `PATCH`  | `/materials/:id`             | `update`      | Atualiza material                    |
+| `DELETE` | `/materials/:id`             | `destroy`     | Deleta material                      |
+| `PATCH`  | `/materials/:id/push_status` | `push_status` | Avança status                        |
+| `PATCH`  | `/materials/:id/pull_status` | `pull_status` | Regride status                       |
 
-### Autores (Pessoa)
-
+### 👤 Autores (Pessoa)
 | Método | Endpoint | Controller\#Ação | Propósito |
 | :--- | :--- | :--- | :--- |
 | `GET` | `/people` | `PeopleController#index` | (Público) Lista todos os autores (pessoa). |
@@ -149,8 +154,7 @@ Todas as rotas de criação/atualização/remoção (POST, PATCH, DELETE) exigem
 | `POST` | `/people` | `PeopleController#create` | (Autenticado) Cria um novo autor (pessoa). |
 | `PATCH`| `/people/:id` | `PeopleController#update` | (Autenticado) Atualiza um autor (pessoa). |
 | `DELETE`| `/people/:id`| `PeopleController#destroy`| (Autenticado) Deleta um autor (pessoa). |
-
-### Autores (Instituição)
+### 🏛️ Autores (Instituição)
 
 | Método | Endpoint | Controller\#Ação | Propósito |
 | :--- | :--- | :--- | :--- |
@@ -159,30 +163,28 @@ Todas as rotas de criação/atualização/remoção (POST, PATCH, DELETE) exigem
 | `POST` | `/institutions` | `InstitutionsController#create` | (Autenticado) Cria uma nova instituição. |
 | `PATCH`| `/institutions/:id`| `InstitutionsController#update` | (Autenticado) Atualiza uma instituição. |
 | `DELETE`| `/institutions/:id`| `InstitutionsController#destroy`| (Autenticado) Deleta uma instituição. |
+---
 
------
+## 🧭 Documentação Interativa (Postman)
 
-## Documentação Interativa (Postman)
+🧩 Explore a API interativamente no Postman!
+A collection já inclui variáveis e autenticação automática JWT após login.
 
-Uma documentação completa e interativa da API está disponível no Postman. A collection inclui todos os endpoints, exemplos de requisições e um ambiente configurado para lidar automaticamente com a autenticação JWT.
+🔗 [Acesse aqui](https://www.postman.com/henriquecmelo1/my-workspace/collection/gawgm0g/libraryapp?action=share&creator=34558713&active-environment=34558713-db793dd4-e579-4d6d-8c35-b90d82d55e4b)
 
-A API está disponível para consumo e testes por lá.
+---
 
-https://www.postman.com/henriquecmelo1/my-workspace/collection/gawgm0g/libraryapp?action=share&creator=34558713&active-environment=34558713-db793dd4-e579-4d6d-8c35-b90d82d55e4b
+## ⚙️ Fluxos de Negócio Importantes
 
------
+### 🛡️ Autorização
 
-## Fluxos de Negócio Importantes
-
-### Autorização
-
-A API divide o acesso em três níveis:
+🔓 **Níveis de acesso:**
 
 1.  **Público:** Rotas `GET` para `index`, `show` e `search` são abertas.
 2.  **Autenticado:** Qualquer usuário logado pode criar novos autores (`Person`, `Institution`) e novos `Materials`.
 3.  **Dono (Criador):** Apenas o usuário que criou um `Material` (o `@current_user` que é comparado com `material.user_id`) pode **atualizar**, **deletar** ou **mudar o status** desse material.
 
-### Criação de Livro via ISBN
+### 📖 Criação de Livro via ISBN
 
 Ao fazer `POST /materials` com `type: "Book"`:
 
@@ -192,25 +194,12 @@ Ao fazer `POST /materials` com `type: "Book"`:
 4.  Se a requisição for bem-sucedida, os campos `title` e `page_count` são preenchidos com os dados da API antes de salvar.
 
 
-## Testando Manualmente (API Client)
 
-A pasta `test-http/` contém exemplos de requisições que podem ser usados com extensões de API Client (como a "REST Client" do VS Code) para facilitar testes manuais.
+---
 
-**Exemplo de JSON para `POST /materials`:**
+## 🗂️ Estrutura do Projeto
 
-```json
-{
-  "material": {
-    "type": "Book",
-    "author_id": 1,
-    "author_type": "Person",
-    "status": "draft",
-    "isbn": "9780451526533" 
-  }
-}
-```
-
-## Estrutura do Projeto
+📁 **Principais diretórios:**
 
   * `app/models`:
       * `material.rb`: Modelo base (STI), contém o `enum status` e validações genéricas.
@@ -224,9 +213,55 @@ A pasta `test-http/` contém exemplos de requisições que podem ser usados com 
       * `open_library_service.rb`: Serviço isolado que usa `HTTParty` para se comunicar com a Open Library.
   * `spec/`:
       * `spec/models`: Testes de unidade para todas as validações de todos os modelos.
-      * `spec/requests`: Testes de integração para todos os controllers, cobrindo permissões, regras de negócio e *mocking* da API externa.
+      * `spec/requests`: Testes de integração para todos os controllers, cobrindo permissões e regras de negócio.
 
-## Próximos Passos
+---
 
-  * Deploy em um ambiente de produção.
-  * Frontend simples para consumir a API.
+## 🚀 Próximos Passos
+
+* ☁️ Deploy em produção
+* 💻 Criar frontend para consumo da API
+
+---
+
+## 🔮 GraphQL Implementation
+
+✨ Implementação disponível na branch `graphql`.
+
+### 🔍 Exemplo de Busca
+
+```graphql
+query ListaDeMateriaisComAutores {
+  materials {
+    id
+    title
+    author {
+      ... on Person {
+        __typename
+        name
+        dateOfBirth
+      }
+      ... on Institution {
+        __typename
+        name
+        city
+      }
+    }
+  }
+}
+```
+
+### 🧾 Headers
+
+```json
+{
+  "Authorization": "Bearer jwt_token"
+}
+```
+
+### 🖥️ Interface Gráfica
+
+Acesse o **GraphiQL** em `/graphiql` para explorar e testar queries interativamente.
+
+---
+
