@@ -12,7 +12,11 @@ class MaterialsController < ApplicationController
   # GET /materials
   def index
 
-    @pagy, @records = pagy(Material.where(status: 'published').order(:id))
+    if params[:limit].present?
+      @pagy, @records = pagy(Material.where(status: 'published').order(:id), limit: params[:limit].to_i)
+    else
+      @pagy, @records = pagy(Material.where(status: 'published').order(:id))
+    end
 
     render json: {
       materials: @records,
@@ -42,7 +46,11 @@ class MaterialsController < ApplicationController
     end
 
     # Aplicamos o distinct (para o caso do join de autor) e a paginação
-    @pagy, @records = pagy(@materials.distinct)
+    if params[:limit].present?
+      @pagy, @records = pagy(@materials.distinct, limit: params[:limit].to_i)
+    else
+      @pagy, @records = pagy(@materials.distinct)
+    end
     
     render json: {
       materials: @records,
