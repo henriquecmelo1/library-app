@@ -117,7 +117,7 @@
           1,
           null,
           1,
-          68,
+          71,
           1,
           null,
           null
@@ -131,7 +131,7 @@
           1,
           null,
           1,
-          229
+          241
         ]
       },
       "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/models/video.rb": {
@@ -290,22 +290,26 @@
           null,
           1,
           null,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          5,
-          null,
-          null,
-          5,
+          3,
           2,
+          null,
+          1,
+          null,
+          null,
+          3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          6,
+          null,
+          null,
+          6,
+          3,
           null,
           3,
           1,
@@ -320,9 +324,13 @@
           null,
           null,
           null,
-          4,
+          5,
+          1,
           null,
           4,
+          null,
+          null,
+          5,
           null,
           null,
           null,
@@ -605,6 +613,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1761238427
+    "timestamp": 1761241754
   }
 }
