@@ -591,6 +591,450 @@
           null
         ]
       },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/controllers/graphql_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/library_app_schema.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/mutations/base_mutation.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/resolvers/base_resolver.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/author_type.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_argument.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_connection.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_edge.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_enum.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_field.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_input_object.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_interface.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_object.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_scalar.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/base_union.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/institution_type.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/material_type.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/mutation_type.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/node_type.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/person_type.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/graphql/types/query_type.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0
+        ],
+        "branches": {}
+      },
       "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/jobs/application_job.rb": {
         "lines": [
           0,
@@ -613,6 +1057,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1761241754
+    "timestamp": 1761248801
   }
 }

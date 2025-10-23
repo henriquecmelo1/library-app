@@ -12,6 +12,7 @@ gem "rack-cors"          # Para permitir requisições de outros domínios
 gem "pagy"               # Paginação 
 gem "httparty"           # Consome a API da OpenLibrary
 gem "dotenv-rails"       # .env
+gem "graphql"            
 
 # Windows does not include zoneinfo files
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -37,3 +38,4 @@ end
 group :test do
   gem "simplecov", require: false
 end
+gem "graphiql-rails", group: :development
