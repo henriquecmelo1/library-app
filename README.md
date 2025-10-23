@@ -15,12 +15,13 @@ Uma API RESTful completa construída em Ruby on Rails para gerenciar uma platafo
       * [Materiais (Livros, Artigos, Vídeos)](#materiais)
       * [Autores (Pessoa)](#autores-pessoa)
       * [Autores (Instituição)](#autores-instituição)
-6.  [Fluxos de Negócio Importantes](#fluxos-de-negócio-importantes)
+6.  [Documentação Interativa (Postman)](#documentação-interativa-postman)
+7.  [Fluxos de Negócio Importantes](#fluxos-de-negócio-importantes)
       * [Autorização (Dono vs. Público)](#autorização)
       * [Criação de Livro via ISBN](#criação-de-livro-via-isbn)
-7.  [Testando Manualmente (API Client)](#testando-manualmente-api-client)
-8.  [Estrutura do Projeto](#estrutura-do-projeto)
-9.  [Próximos Passos](#próximos-passos)
+8.  [Testando Manualmente (API Client)](#testando-manualmente-api-client)
+9.  [Estrutura do Projeto](#estrutura-do-projeto)
+10.  [Próximos Passos](#próximos-passos)
 
 -----
 
@@ -161,6 +162,16 @@ Todas as rotas de criação/atualização/remoção (POST, PATCH, DELETE) exigem
 
 -----
 
+## Documentação Interativa (Postman)
+
+Uma documentação completa e interativa da API está disponível no Postman. A collection inclui todos os endpoints, exemplos de requisições e um ambiente configurado para lidar automaticamente com a autenticação JWT.
+
+A API está disponível para consumo e testes por lá.
+
+https://www.postman.com/henriquecmelo1/my-workspace/collection/gawgm0g/libraryapp?action=share&creator=34558713&active-environment=34558713-db793dd4-e579-4d6d-8c35-b90d82d55e4b
+
+-----
+
 ## Fluxos de Negócio Importantes
 
 ### Autorização
@@ -217,6 +228,5 @@ A pasta `test-http/` contém exemplos de requisições que podem ser usados com 
 
 ## Próximos Passos
 
-  * Documentação interativa da API (Swagger ou Postman).
   * Deploy em um ambiente de produção.
   * Frontend simples para consumir a API.
