@@ -43,6 +43,9 @@ Inclui **autenticação JWT**, **gerenciamento de materiais (com STI)**, **autor
 * 🔁 **Máquina de Estado de Status:** Controle de ciclo de vida (`Draft → Published → Archived`).
 * 🔎 **Busca e Paginação:** Endpoint `/search` com múltiplos parâmetros e paginação (`pagy`).
 * 🧪 **Testes Robustos:** Cobertura acima de 90% com `RSpec` e `SimpleCov`.
+* 🔎 **Busca por Autores:**
+  * **Pessoas:** Endpoint `/materials/by_person_authors` para listar materiais com autores do tipo `Person`.
+  * **Instituições:** Endpoint `/materials/by_institution_authors` para listar materiais com autores do tipo `Institution`.
 
 ---
 
@@ -133,19 +136,6 @@ bundle exec rspec
 | `POST` | `/signup` | `UsersController#create`         | Registra novo usuário |
 | `POST` | `/login`  | `AuthenticationController#login` | Gera token JWT        |
 
-### 📘 Materiais
-
-| Método   | Endpoint                     | Ação          | Descrição                            |
-| :------- | :--------------------------- | :------------ | :----------------------------------- |
-| `GET`    | `/materials`                 | `index`       | Lista materiais publicados           |
-| `GET`    | `/materials/:id`             | `show`        | Mostra um material                   |
-| `GET`    | `/materials/search`          | `search`      | Busca por título, autor ou descrição |
-| `POST`   | `/materials`                 | `create`      | Cria material                        |
-| `PATCH`  | `/materials/:id`             | `update`      | Atualiza material                    |
-| `DELETE` | `/materials/:id`             | `destroy`     | Deleta material                      |
-| `PATCH`  | `/materials/:id/push_status` | `push_status` | Avança status                        |
-| `PATCH`  | `/materials/:id/pull_status` | `pull_status` | Regride status                       |
-
 ### 👤 Autores (Pessoa)
 | Método | Endpoint | Controller\#Ação | Propósito |
 | :--- | :--- | :--- | :--- |
@@ -163,6 +153,22 @@ bundle exec rspec
 | `POST` | `/institutions` | `InstitutionsController#create` | (Autenticado) Cria uma nova instituição. |
 | `PATCH`| `/institutions/:id`| `InstitutionsController#update` | (Autenticado) Atualiza uma instituição. |
 | `DELETE`| `/institutions/:id`| `InstitutionsController#destroy`| (Autenticado) Deleta uma instituição. |
+
+### 📘 Materiais
+
+| Método   | Endpoint                     | Ação          | Descrição                            |
+| :------- | :--------------------------- | :------------ | :----------------------------------- |
+| `GET`    | `/materials`                 | `index`       | Lista materiais publicados           |
+| `GET`    | `/materials/:id`             | `show`        | Mostra um material                   |
+| `GET`    | `/materials/search`          | `search`      | Busca por título, autor ou descrição |
+| `POST`   | `/materials`                 | `create`      | Cria material                        |
+| `PATCH`  | `/materials/:id`             | `update`      | Atualiza material                    |
+| `DELETE` | `/materials/:id`             | `destroy`     | Deleta material                      |
+| `PATCH`  | `/materials/:id/push_status` | `push_status` | Avança status                        |
+| `PATCH`  | `/materials/:id/pull_status` | `pull_status` | Regride status                       |
+| `GET`    | `/materials/by_person_authors`     | `by_person_authors` | Lista materiais com autores do tipo `Person` |
+| `GET`    | `/materials/by_institution_authors`| `by_institution_authors` | Lista materiais com autores do tipo `Institution` |
+
 ---
 
 ## 🧭 Documentação Interativa (Postman)
