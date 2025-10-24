@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :materials, except: [:new, :edit] do
     collection do
       get 'search'
+      get :by_person_authors
+      get :by_institution_authors
     end
 
     member do

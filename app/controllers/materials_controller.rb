@@ -1,7 +1,7 @@
 class MaterialsController < ApplicationController
   
  # rotas publicas
-  skip_before_action :authorize_request, only: [:index, :show, :search]
+  skip_before_action :authorize_request, only: [:index, :show, :search, :by_person_authors, :by_institution_authors]
 
   # Encontra o material para :show, :update, :destroy
   before_action :set_material, only: [:show, :update, :destroy, :push_status, :pull_status]
@@ -154,6 +154,38 @@ class MaterialsController < ApplicationController
     when "draft"
       render json: { error: "It's not possible to revert the status 'draft'" }, status: :bad_request
     end
+  end
+
+  # GET /materials/by_person_authors
+  def by_person_authors
+    @materials = Material.where(author_type: 'Person', status: 'published')
+
+    if params[:limit].present?
+      @pagy, @records = pagy(@materials.distinct, limit: params[:limit].to_i)
+    else
+      @pagy, @records = pagy(@materials.distinct)
+    end
+    
+    render json: {
+      materials: @records,
+      pagination: pagy_metadata(@pagy)
+    }
+  end
+
+  # GET /materials/by_institution_authors
+  def by_institution_authors
+    @materials = Material.where(author_type: 'Institution', status: 'published')
+
+    if params[:limit].present?
+      @pagy, @records = pagy(@materials.distinct, limit: params[:limit].to_i)
+    else
+      @pagy, @records = pagy(@materials.distinct)
+    end
+    
+    render json: {
+      materials: @records,
+      pagination: pagy_metadata(@pagy)
+    }
   end
   
 
