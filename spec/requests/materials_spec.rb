@@ -7,6 +7,7 @@ RSpec.describe "Materials API", type: :request do
   let!(:user_dono) { User.create!(email: "dono@email.com", password: "password123") }
   let!(:user_outro) { User.create!(email: "outro@email.com", password: "password123") }
   let!(:author) { Person.create!(name: "Autor Testável", date_of_birth: "1980-01-01") }
+  let!(:institution_author) { Institution.create!(name: "Instituição Testável", city: "Cidade Teste") }
 
   # Material publicado que pertence ao 'user_dono'
   let!(:material_publicado) do
@@ -38,8 +39,17 @@ RSpec.describe "Materials API", type: :request do
       title: "Rascunho do Dono",
       status: "draft",
       author: author,
+      description: nil
+    )
+  end
+
+  let!(:material_institution) do
+    user_dono.materials.create!(
+      title: "Material da Instituição",
+      status: "published",
+      author: institution_author,
       type: "Article",
-      doi: "10.1234/rascunho"
+      doi: "10.1000/abc123"
     )
   end
 
@@ -66,7 +76,7 @@ RSpec.describe "Materials API", type: :request do
       get "/materials"
       
       expect(response).to have_http_status(:ok)
-      expect(json_response['materials'].count).to eq(2) # Deve achar os 2 publicados
+      expect(json_response['materials'].count).to eq(3) # Deve achar os 2 publicados
       expect(json_response['materials'][0]['title']).to eq("Livro Publicado do Dono")
     end
 
@@ -84,7 +94,7 @@ RSpec.describe "Materials API", type: :request do
       get "/materials?limit=10"
 
       expect(response).to have_http_status(:ok)
-      expect(json_response['materials'].count).to eq(2)
+      expect(json_response['materials'].count).to eq(3)
       expect(json_response['materials'][0]['title']).to eq("Livro Publicado do Dono")
     end
   end
@@ -187,7 +197,7 @@ RSpec.describe "Materials API", type: :request do
       get "/materials/search?author=Test"
       
       expect(response).to have_http_status(:ok)
-      expect(json_response['materials'].count).to eq(2) # Ambos os materiais são do mesmo autor
+      expect(json_response['materials'].count).to eq(3) 
     end
     
     # Teste 13: Busca com parâmetros (GET /materials/search?description)
@@ -332,6 +342,42 @@ RSpec.describe "Materials API", type: :request do
       patch "/materials/#{material_rascunho.id}/pull_status", headers: headers_dono
       expect(response).to have_http_status(:bad_request)
       expect(json_response['error']).to include("It's not possible to revert the status 'draft'")
+    end
+  end
+
+  describe "GET /materials/by_person_authors" do
+    it "retorna materiais com autores do tipo Person" do
+      get "/materials/by_person_authors"
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response['materials'].count).to eq(2) 
+      expect(json_response['materials'].all? { |material| material['author_type'] == 'Person' }).to be true
+    end
+
+    it "retorna materiais com autores do tipo Person com limite" do
+      get "/materials/by_person_authors", params: { limit: 1 }
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response['materials'].count).to eq(1) 
+      expect(json_response['materials'].all? { |material| material['author_type'] == 'Person' }).to be true
+    end
+  end
+
+  describe "GET /materials/by_institution_authors" do
+    it "retorna materiais com autores do tipo Institution" do
+      get "/materials/by_institution_authors"
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response['materials'].count).to eq(1) 
+      expect(json_response['materials'].all? { |material| material['author_type'] == 'Institution' }).to be true
+    end
+
+    it "retorna materiais com autores do tipo Institution com limite" do
+      get "/materials/by_institution_authors", params: { limit: 1 }
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response['materials'].count).to eq(1) 
+      expect(json_response['materials'].all? { |material| material['author_type'] == 'Institution' }).to be true
     end
   end
 end

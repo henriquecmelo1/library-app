@@ -61,12 +61,27 @@
           null,
           null,
           null,
+          1,
+          1,
+          1,
+          1,
+          1,
           null,
           1,
+          28,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           1,
+          null,
           1,
-          1,
-          1
+          2,
+          5,
+          5,
+          null
         ]
       },
       "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/models/application_record.rb": {
@@ -117,7 +132,7 @@
           1,
           null,
           1,
-          71,
+          85,
           1,
           null,
           null
@@ -131,7 +146,7 @@
           1,
           null,
           1,
-          241
+          277
         ]
       },
       "/mnt/c/Users/henri/.vscode/Visual Studio Code/Desafios/librarails/library-app/app/models/video.rb": {
@@ -436,6 +451,38 @@
           null,
           null,
           1,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
           null,
           null,
           1,
@@ -613,6 +660,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1761241754
+    "timestamp": 1761266408
   }
 }
